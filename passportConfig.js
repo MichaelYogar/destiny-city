@@ -6,13 +6,11 @@ const initialize = (passport) => {
   console.log("Initialized");
 
   const authenticateUser = async (username, password, done) => {
-    console.log(username, password);
     try {
       const results = await db.query(
         `SELECT * FROM users WHERE username = $1`,
         [username]
       );
-      console.log(results.rows);
       if (results.rows.length > 0) {
         const user = results.rows[0];
 
