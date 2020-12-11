@@ -1,9 +1,12 @@
 import React from "react";
 import { Button } from "../../Button/Button";
 import { Link } from "react-router-dom";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
 import "./Hero.scss";
 
 function Hero({
+  options,
   lightBg,
   topLine,
   lightText,
@@ -17,7 +20,7 @@ function Hero({
 }) {
   return (
     <>
-      <div className={lightBg ? "home__hero" : "home__hero darkBg"}>
+      <div className={lightBg ? "home__hero" : "home__hero dark"}>
         <div className="container">
           <div
             className="row home__hero-row"
@@ -41,6 +44,16 @@ function Hero({
                 >
                   {description}
                 </p>
+                <Autocomplete
+                  onChange={(event, value) => console.log(value)}
+                  id="combo-box-demo"
+                  options={options}
+                  getOptionLabel={(option) => option.City}
+                  style={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="City" variant="outlined" />
+                  )}
+                />
                 <Link to="/sign-up">
                   <Button buttonSize="btn--wide" buttonColor="blue">
                     {buttonLabel}
