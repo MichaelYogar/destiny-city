@@ -274,10 +274,10 @@ export const homeObjOne = {
   lightText: false,
   lightTextDesc: true,
   topLine: "",
-  headline: "Where To Move?",
-  description: "",
+  headline: "Where To Work",
+  description: "A Compass For Developers",
   buttonLabel: "Find",
   imgStart: "",
-  img: "",
+  img: "images/working.svg",
   alt: "test-alt",
 };
