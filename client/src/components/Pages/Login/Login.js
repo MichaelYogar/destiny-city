@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,21 +10,27 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import useStyles from "../../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import useStyles from "../../../hooks/useStyles";
+import { UserContext } from "../../../context/UserContext";
+import { useHistory } from "react-router-dom";
 
-export default function Signup() {
+export default function Login() {
   const classes = useStyles();
-
+  const { user, setUser } = useContext(UserContext);
   const { register, handleSubmit } = useForm();
+  const history = useHistory();
 
   const onSubmit = async (data) => {
     try {
-      const result = await axios.post("/register", data);
-      console.log(result.data.status);
-    } catch (err) {
-      console.log(err);
+      const result = await axios.post("/login", data);
+      if (result.data.auth) {
+        setUser({ username: data.username });
+        history.push("/");
+      }
+    } catch (error) {
+      console.log(error.response.data);
     }
   };
 
@@ -38,7 +44,7 @@ export default function Signup() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign Up
+            Login
           </Typography>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -80,7 +86,7 @@ export default function Signup() {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+              Login
             </Button>
             <Grid container>
               <Grid item xs>
@@ -90,7 +96,7 @@ export default function Signup() {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Already have an account? Log In"}
+                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
