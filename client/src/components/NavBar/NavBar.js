@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { MdWork } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -6,6 +6,8 @@ import { Button } from "../Button/Button";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { IconContext } from "react-icons/lib";
 import "./NavBar.scss";
+import { UserContext } from "../../context/UserContext";
+import axios from "axios";
 
 function NavBar() {
   const [click, setClick] = useState(false);
@@ -15,20 +17,65 @@ function NavBar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
-    const showButton = () => {
+    const buttonSize = () => {
       if (width <= 960) {
         setButton(false);
       } else {
         setButton(true);
       }
     };
-    showButton();
-    window.addEventListener("resize", showButton);
+    buttonSize();
+    window.addEventListener("resize", buttonSize);
     return () => {
-      window.removeEventListener("resize", showButton);
+      window.removeEventListener("resize", buttonSize);
     };
   }, [width, height]);
+
+  const handleLogout = async () => {
+    try {
+      const result = await axios.get("/users/logout");
+      console.log(result);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  const showButton = () => {
+    if (!user && button) {
+      return (
+        <Link to="/sign-up" className="btn-link">
+          <Button buttonStyle="btn--outline">SIGN UP</Button>
+        </Link>
+      );
+    } else if (!user && !button) {
+      return (
+        <Link to="/sign-up" className="btn-link">
+          <Button
+            buttonStyle="btn--outline"
+            buttonSize="btn--mobile"
+            onClick={closeMobileMenu}
+          >
+            Sign Up
+          </Button>
+        </Link>
+      );
+    } else {
+      return (
+        <li className="nav-item">
+          <Link
+            to="/"
+            className="nav-links"
+            onClick={(closeMobileMenu, handleLogout)}
+          >
+            logout
+          </Link>
+        </li>
+      );
+    }
+  };
 
   return (
     <>
@@ -37,7 +84,7 @@ function NavBar() {
           <div className="navbar-container container">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
               <MdWork className="navbar-icon" />
-              WhereToWork
+              W2W
             </Link>
             <div className="menu-icon" onClick={handleClick}>
               {click ? <FaTimes /> : <FaBars />}
@@ -54,35 +101,29 @@ function NavBar() {
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  Featured
+                  Features
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  to="/products"
-                  className="nav-links"
-                  onClick={closeMobileMenu}
-                >
-                  About
-                </Link>
-              </li>
-              <li className="nav-btn">
-                {button ? (
-                  <Link to="/sign-up" className="btn-link">
-                    <Button buttonStyle="btn--outline">SIGN UP</Button>
+                {user ? (
+                  <Link
+                    to="/profile"
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                  >
+                    {user.username}
                   </Link>
                 ) : (
-                  <Link to="/sign-up" className="btn-link">
-                    <Button
-                      buttonStyle="btn--outline"
-                      buttonSize="btn--mobile"
-                      onClick={closeMobileMenu}
-                    >
-                      SIGN UP
-                    </Button>
+                  <Link
+                    to="/login"
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                  >
+                    Login
                   </Link>
                 )}
               </li>
+              <li className="nav-btn">{showButton()}</li>
             </ul>
           </div>
         </nav>
