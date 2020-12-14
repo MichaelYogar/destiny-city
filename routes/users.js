@@ -10,7 +10,7 @@ router.get("/logout", (req, res) => {
   req.session.destroy(function () {
     res.clearCookie("connect.sid");
     console.log(req.session);
-    res.redirect("/");
+    res.status(200).send({ loggedOut: "true" });
   });
 });
 
