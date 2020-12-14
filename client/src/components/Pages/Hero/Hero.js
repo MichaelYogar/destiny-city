@@ -1,8 +1,9 @@
-import React from "react";
-import { Button } from "../../Button/Button";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
+import { CityContext } from "../../../contexts/CityContext";
+import { useHistory } from "react-router-dom";
+import { Button } from "../../Button/Button";
 import "./Hero.scss";
 
 function Hero({
@@ -18,6 +19,9 @@ function Hero({
   alt,
   imgStart,
 }) {
+  const { updateCity } = useContext(CityContext);
+  const history = useHistory();
+
   return (
     <>
       <div className={lightBg ? "home__hero" : "home__hero dark"}>
@@ -45,7 +49,7 @@ function Hero({
                   {description}
                 </p>
                 <Autocomplete
-                  onChange={(event, value) => console.log(value)}
+                  onChange={(event, value) => updateCity(value)}
                   id="combo-box-demo"
                   options={options}
                   getOptionLabel={(option) => option.City}
@@ -54,11 +58,9 @@ function Hero({
                     <TextField {...params} label="City" variant="outlined" />
                   )}
                 />
-                <Link to="/sign-up">
-                  <Button buttonSize="btn--wide" buttonColor="blue">
-                    {buttonLabel}
-                  </Button>
-                </Link>
+                <Button type="submit" onClick={() => history.push("/info")}>
+                  Search
+                </Button>
               </div>
             </div>
             <div className="col">
