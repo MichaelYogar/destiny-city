@@ -13,22 +13,22 @@ import Typography from "@material-ui/core/Typography";
 import useStyles from "../../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { UserContext } from "../../../context/UserContext";
 import { useHistory } from "react-router-dom";
+import AuthContext from "../../../contexts/AuthContext";
 
 export default function Login() {
   const classes = useStyles();
-  const { user, setUser } = useContext(UserContext);
   const { register, handleSubmit } = useForm();
   const history = useHistory();
 
+  const { updateToken } = useContext(AuthContext);
+
   const onSubmit = async (data) => {
     try {
-      const result = await axios.post("/login", data);
-      if (result.data.auth) {
-        setUser({ username: data.username });
-        history.push("/");
-      }
+      const response = await axios.post("/auth/login", data);
+      const token = response.data.jwtToken;
+      // only valid tokens
+      updateToken(token);
     } catch (error) {
       console.log(error.response.data);
     }
@@ -58,6 +58,18 @@ export default function Login() {
               required
               fullWidth
               id="email"
+              label="Email"
+              name="email"
+              autoComplete="off"
+              autoFocus
+            />
+            <TextField
+              inputRef={register}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
               label="Username"
               name="username"
               autoComplete="off"
