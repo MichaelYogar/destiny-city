@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,18 +13,29 @@ import Typography from "@material-ui/core/Typography";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import useStyles from "../../../hooks/useStyles";
+import AuthContext from "../../../contexts/AuthContext";
 
+// when user signs up, they are automatically signed in
 export default function Signup() {
   const classes = useStyles();
 
+  const { updateToken } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      const result = await axios.post("/register", data);
-      console.log(result.data.status);
-    } catch (err) {
-      console.log(err);
+      const response = await axios.post("/auth/register", data);
+      // token can be null from incorrect input, need to do error checking
+      const token = response.data.jwtToken;
+      if (token === undefined || token === null) {
+        // use react-toaster to say they need to submit valid info
+        alert("token is undefined");
+      } else {
+        // only passing valid tokens
+        updateToken(token);
+      }
+    } catch (error) {
+      console.log(error.response.data);
     }
   };
 
@@ -52,6 +63,18 @@ export default function Signup() {
               required
               fullWidth
               id="email"
+              label="Email"
+              name="email"
+              autoComplete="off"
+              autoFocus
+            />
+            <TextField
+              inputRef={register}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
               label="Username"
               name="username"
               autoComplete="off"
