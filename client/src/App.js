@@ -4,8 +4,9 @@ import Home from "./components/Pages/Home/Home";
 import Signup from "./components/Pages/Signup/Signup";
 import Login from "./components/Pages/Login/Login";
 import CityState from "./contexts/CityState";
+import AuthState from "./contexts/AuthState";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { UserContext } from "./context/UserContext";
+import { UserContext } from "./contexts/UserContext";
 import Info from "./components/Pages/Info/Info";
 
 function App() {
@@ -15,14 +16,16 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/sign-up" component={Signup} />
-        <UserContext.Provider value={value}>
-          <Route path="/login" component={Login} />
-          <CityState>
-            <Route path="/info" component={Info} />
-            <Route path="/" component={Home} />
-          </CityState>
-        </UserContext.Provider>
+        <AuthState>
+          <Route path="/sign-up" component={Signup} />
+          <UserContext.Provider value={value}>
+            <Route path="/login" component={Login} />
+            <CityState>
+              <Route path="/info" component={Info} />
+              <Route path="/" exact component={Home} />
+            </CityState>
+          </UserContext.Provider>
+        </AuthState>
       </Switch>
     </Router>
   );
