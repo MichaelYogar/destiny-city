@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,29 +10,41 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { useForm } from "react-hook-form";
 import axios from "axios";
 import useStyles from "../../../hooks/useStyles";
-import AuthContext from "../../../contexts/AuthContext";
+import { useForm } from "react-hook-form";
+import { GlobalContext } from "../../../context/reducers/globalReducer";
+import { Link as RouterLink } from "react-router-dom";
+
+import {
+  setAuth,
+  setToken,
+  setUsername,
+} from "../../../context/actions/globalActions";
 
 // when user signs up, they are automatically signed in
 export default function Signup() {
   const classes = useStyles();
-
-  const { updateToken } = useContext(AuthContext);
+  const [{ isAuth }, dispatchToGlobal] = useContext(GlobalContext);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
     try {
       const response = await axios.post("/auth/register", data);
+
       // token can be null from incorrect input, need to do error checking
       const token = response.data.jwtToken;
+
       if (token === undefined || token === null) {
         // use react-toaster to say they need to submit valid info
         alert("token is undefined");
+        // valid token
       } else {
-        // only passing valid tokens
-        updateToken(token);
+        dispatchToGlobal(setAuth());
+        dispatchToGlobal(setToken(token));
+        dispatchToGlobal(setUsername(data.username));
+        console.log(data.username);
+        alert("signed up");
       }
     } catch (error) {
       console.log(error.response.data);
@@ -107,12 +119,12 @@ export default function Signup() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/" variant="body2">
+                <Link component={RouterLink} to="/" variant="body2">
                   W2W
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={RouterLink} to="/login" variant="body2">
                   {"Already have an account? Log In"}
                 </Link>
               </Grid>

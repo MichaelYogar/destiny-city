@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,26 +13,42 @@ import Typography from "@material-ui/core/Typography";
 import useStyles from "../../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import AuthContext from "../../../contexts/AuthContext";
+import CityContext from "../../../context/CityContext";
+import { GlobalContext } from "../../../context/reducers/globalReducer";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  setAuth,
+  setToken,
+  setUsername,
+} from "../../../context/actions/globalActions";
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
+  const [{ isAuth }, dispatchToGlobal] = useContext(GlobalContext);
   const { register, handleSubmit } = useForm();
-  const history = useHistory();
-
-  const { updateToken } = useContext(AuthContext);
-
+  const { City } = useContext(CityContext);
   const onSubmit = async (data) => {
     try {
       const response = await axios.post("/auth/login", data);
       const token = response.data.jwtToken;
-      // only valid tokens
-      updateToken(token);
+
+      if (token === undefined || token === null) {
+        // use react-toaster to say they need to submit valid info
+        alert("token is undefined");
+        // valid token
+      } else {
+        dispatchToGlobal(setAuth());
+        dispatchToGlobal(setToken(token));
+        dispatchToGlobal(setUsername(data.username));
+      }
     } catch (error) {
       console.log(error.response.data);
     }
   };
+
+  useEffect(() => {
+    console.log(City);
+  }, [City]);
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -102,12 +118,12 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/" variant="body2">
+                <Link component={RouterLink} to="/" variant="body2">
                   W2W
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={RouterLink} to="/sign-up" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
