@@ -8,14 +8,18 @@ import { IconContext } from "react-icons/lib";
 import "./NavBar.scss";
 import axios from "axios";
 import { GlobalContext } from "../../context/reducers/globalReducer";
+import {
+  setToken,
+  setUsername,
+  userLogout,
+} from "../../context/actions/globalActions";
 
 function NavBar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const { height, width } = useWindowDimensions();
 
-  const [global, dispatchToGlobal] = useContext(GlobalContext);
-  console.log(global);
+  const [{ username }, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -36,22 +40,19 @@ function NavBar() {
   }, [width, height]);
 
   const handleLogout = async () => {
-    try {
-      const result = await axios.get("/users/logout");
-      console.log(result);
-    } catch (error) {
-      console.log(error.response.data);
-    }
+    dispatchToGlobal(userLogout());
+    dispatchToGlobal(setToken(""));
+    dispatchToGlobal(setUsername(""));
   };
 
   const showButton = () => {
-    if (!global.username && button) {
+    if (!username && button) {
       return (
         <Link to="/sign-up" className="btn-link">
           <Button buttonStyle="btn--outline">SIGN UP</Button>
         </Link>
       );
-    } else if (!global.username && !button) {
+    } else if (!username && !button) {
       return (
         <Link to="/sign-up" className="btn-link">
           <Button
@@ -104,13 +105,13 @@ function NavBar() {
                 </Link>
               </li>
               <li className="nav-item">
-                {global.username ? (
+                {username ? (
                   <Link
                     to="/profile"
                     className="nav-links"
                     onClick={closeMobileMenu}
                   >
-                    {global.username}
+                    {username}
                   </Link>
                 ) : (
                   <Link
