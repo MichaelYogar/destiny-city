@@ -15,7 +15,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import CityContext from "../../../context/CityContext";
 import { GlobalContext } from "../../../context/reducers/globalReducer";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Redirect } from "react-router-dom";
+
 import {
   setAuth,
   setToken,
@@ -27,6 +28,7 @@ export default function Login(props) {
   const [{ isAuth }, dispatchToGlobal] = useContext(GlobalContext);
   const { register, handleSubmit } = useForm();
   const { City } = useContext(CityContext);
+
   const onSubmit = async (data) => {
     try {
       const response = await axios.post("/auth/login", data);
@@ -51,86 +53,100 @@ export default function Login(props) {
   }, [City]);
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={classes.form}
-            noValidate
+    <>
+      {isAuth ? (
+        <Redirect to="/" />
+      ) : (
+        <Grid container component="main" className={classes.root}>
+          <CssBaseline />
+          <Grid item xs={false} sm={4} md={7} className={classes.image} />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
           >
-            <TextField
-              inputRef={register}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="off"
-              autoFocus
-            />
-            <TextField
-              inputRef={register}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="off"
-              autoFocus
-            />
-            <TextField
-              inputRef={register}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Login
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link component={RouterLink} to="/" variant="body2">
-                  W2W
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link component={RouterLink} to="/sign-up" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Grid>
-    </Grid>
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Login
+              </Typography>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className={classes.form}
+                noValidate
+              >
+                <TextField
+                  inputRef={register}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="off"
+                  autoFocus
+                />
+                <TextField
+                  inputRef={register}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="off"
+                  autoFocus
+                />
+                <TextField
+                  inputRef={register}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Login
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link component={RouterLink} to="/" variant="body2">
+                      W2W
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link component={RouterLink} to="/sign-up" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </Grid>
+        </Grid>
+      )}
+    </>
   );
 }
