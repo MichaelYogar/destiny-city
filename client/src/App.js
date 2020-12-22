@@ -1,32 +1,45 @@
-import React, { useState, useMemo } from "react";
+import React, { useReducer } from "react";
 import "./App.scss";
 import Home from "./components/Pages/Home/Home";
-import Signup from "./components/Pages/Signup/Signup";
-import Login from "./components/Pages/Login/Login";
-import CityState from "./contexts/CityState";
-import AuthState from "./contexts/AuthState";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { UserContext } from "./contexts/UserContext";
 import Info from "./components/Pages/Info/Info";
+import { Link } from "react-router-dom";
+import Login from "./components/Pages/Login/Login";
+import Signup from "./components/Pages/Signup/Signup";
+import {
+  GlobalContext,
+  globalState,
+  globalReducer,
+} from "./context/reducers/globalReducer";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+  const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   return (
     <Router>
-      <Switch>
-        <AuthState>
-          <Route path="/sign-up" component={Signup} />
-          <UserContext.Provider value={value}>
-            <Route path="/login" component={Login} />
-            <CityState>
-              <Route path="/info" component={Info} />
-              <Route path="/" exact component={Home} />
-            </CityState>
-          </UserContext.Provider>
-        </AuthState>
-      </Switch>
+      <div>
+        {/* <nav>
+          <ul>
+            <li>
+              <Link to="/sign-up">SignUp</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+          </ul>
+        </nav> */}
+        <GlobalContext.Provider value={[global, dispatchToGlobal]}>
+          <Switch>
+            <Route path="/sign-up" component={Signup} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/" exact component={Home} />
+          </Switch>
+        </GlobalContext.Provider>
+        {/* {/* <Route path="/info" component={Info} /> */}
+      </div>
     </Router>
   );
 }
