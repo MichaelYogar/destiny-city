@@ -6,18 +6,19 @@ import { Button } from "../Button/Button";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { IconContext } from "react-icons/lib";
 import "./NavBar.scss";
-import { UserContext } from "../../context/UserContext";
 import axios from "axios";
+import { GlobalContext } from "../../context/reducers/globalReducer";
 
 function NavBar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const { height, width } = useWindowDimensions();
 
+  const [global, dispatchToGlobal] = useContext(GlobalContext);
+  console.log(global);
+
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-
-  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const buttonSize = () => {
@@ -44,13 +45,13 @@ function NavBar() {
   };
 
   const showButton = () => {
-    if (!user && button) {
+    if (!global.username && button) {
       return (
         <Link to="/sign-up" className="btn-link">
           <Button buttonStyle="btn--outline">SIGN UP</Button>
         </Link>
       );
-    } else if (!user && !button) {
+    } else if (!global.username && !button) {
       return (
         <Link to="/sign-up" className="btn-link">
           <Button
@@ -64,15 +65,13 @@ function NavBar() {
       );
     } else {
       return (
-        <li className="nav-item">
-          <Link
-            to="/"
-            className="nav-links"
-            onClick={(closeMobileMenu, handleLogout)}
-          >
-            logout
-          </Link>
-        </li>
+        <Link
+          to="/"
+          className="nav-links"
+          onClick={(closeMobileMenu, handleLogout)}
+        >
+          logout
+        </Link>
       );
     }
   };
@@ -105,13 +104,13 @@ function NavBar() {
                 </Link>
               </li>
               <li className="nav-item">
-                {user ? (
+                {global.username ? (
                   <Link
                     to="/profile"
                     className="nav-links"
                     onClick={closeMobileMenu}
                   >
-                    {user.username}
+                    {global.username}
                   </Link>
                 ) : (
                   <Link
