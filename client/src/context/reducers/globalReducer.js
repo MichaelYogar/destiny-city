@@ -16,6 +16,9 @@ export const globalReducer = (state, action) => {
     case actionTypes.SET_AUTH:
       return { ...state, isAuth: true };
 
+    case actionTypes.USER_LOGOUT:
+      return { ...state, isAuth: false };
+
     case actionTypes.SET_TOKEN:
       return { ...state, token: action.token };
 
