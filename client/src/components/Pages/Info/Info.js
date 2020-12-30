@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
-import { CityContext } from "../../../contexts/CityContext";
+import React from "react";
+import NavBar from "../../NavBar/NavBar";
+import HeroInfo from "../HeroInfo/HeroInfo";
 
 function Info() {
-  const { City } = useContext(CityContext);
-  return <div>{City}</div>;
+  return (
+    <>
+      <NavBar />
+      <HeroInfo />
+    </>
+  );
 }
 
 export default Info;
