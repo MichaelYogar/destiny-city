@@ -4,14 +4,14 @@ export const actionTypes = {
   UPDATE_SALARIES: "UPDATE_SALARIES",
 };
 
-export const updateCity = (city) => ({ type: actionTypes.SET_TOKEN, city });
+export const updateCity = (city) => ({ type: actionTypes.UPDATE_CITY, city });
 
 export const updateRatings = (ratings) => ({
-  type: actionTypes.SET_TOKEN,
+  type: actionTypes.UPDATE_RATINGS,
   ratings,
 });
 
-export const updateSalries = (salaries) => ({
-  type: actionTypes.SET_TOKEN,
+export const updateSalaries = (salaries) => ({
+  type: actionTypes.UPDATE_SALARIES,
   salaries,
 });

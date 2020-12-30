@@ -3,7 +3,7 @@ import { actionTypes } from "../actions/cityActions";
 
 export const CityContext = createContext(null);
 
-export const globalState = {
+export const cityState = {
   city: "Toronto",
   salaries: {},
   ratings: {},

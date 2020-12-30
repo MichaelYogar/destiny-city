@@ -9,8 +9,6 @@ export const globalState = {
   username: "",
 };
 
-console.log(globalState);
-
 export const globalReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_AUTH:
