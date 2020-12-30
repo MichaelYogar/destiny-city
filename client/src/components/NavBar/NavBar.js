@@ -6,8 +6,8 @@ import { Button } from "../Button/Button";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { IconContext } from "react-icons/lib";
 import "./NavBar.scss";
-import axios from "axios";
 import { GlobalContext } from "../../context/reducers/globalReducer";
+
 import {
   setToken,
   setUsername,
@@ -97,11 +97,11 @@ function NavBar() {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/services"
+                  to="/about"
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  Features
+                  About
                 </Link>
               </li>
               <li className="nav-item">

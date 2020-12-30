@@ -40,6 +40,7 @@
 
 .navbar-icon {
   margin-right: 0.5rem;
+  color: $default-icon-colour !important;
 }
 
 .nav-menu {
@@ -57,7 +58,7 @@
 }
 
 .nav-item:hover {
-  border-bottom: 2px solid #f00946;
+  border-bottom: 2px solid #fff;
 }
 
 .nav-links {
@@ -110,7 +111,7 @@
   }
 
   .nav-links:hover {
-    color: #f00946;
+    color: #fff;
     transform: scale(1.2);
     transition: all 0.3s ease;
   }
