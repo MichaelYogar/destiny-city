@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,7 +14,7 @@ import axios from "axios";
 import useStyles from "../../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "../../../context/reducers/globalReducer";
-import { Link as RouterLink, Redirect, useHistory } from "react-router-dom";
+import { Link as RouterLink, Redirect } from "react-router-dom";
 
 import {
   setAuth,
@@ -27,7 +27,6 @@ export default function Signup() {
   const classes = useStyles();
   const [{ isAuth }, dispatchToGlobal] = useContext(GlobalContext);
   const { register, handleSubmit } = useForm();
-  const history = useHistory();
 
   const onSubmit = async (data) => {
     try {
@@ -38,13 +37,11 @@ export default function Signup() {
 
       if (token === undefined || token === null) {
         // use react-toaster to say they need to submit valid info
-        alert("token is undefined");
         // valid token
       } else {
         dispatchToGlobal(setToken(token));
         dispatchToGlobal(setUsername(data.username));
         dispatchToGlobal(setAuth());
-        alert("i get here");
       }
     } catch (error) {
       console.log(error.response.data);

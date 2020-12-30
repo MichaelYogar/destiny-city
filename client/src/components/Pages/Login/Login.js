@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,7 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import useStyles from "../../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import CityContext from "../../../context/CityContext";
 import { GlobalContext } from "../../../context/reducers/globalReducer";
 import { Link as RouterLink, Redirect } from "react-router-dom";
 
@@ -27,7 +26,6 @@ export default function Login(props) {
   const classes = useStyles();
   const [{ isAuth }, dispatchToGlobal] = useContext(GlobalContext);
   const { register, handleSubmit } = useForm();
-  const { City } = useContext(CityContext);
 
   const onSubmit = async (data) => {
     try {
@@ -36,7 +34,6 @@ export default function Login(props) {
 
       if (token === undefined || token === null) {
         // use react-toaster to say they need to submit valid info
-        alert("token is undefined");
         // valid token
       } else {
         dispatchToGlobal(setAuth());
@@ -47,10 +44,6 @@ export default function Login(props) {
       console.log(error.response.data);
     }
   };
-
-  useEffect(() => {
-    console.log(City);
-  }, [City]);
 
   return (
     <>
