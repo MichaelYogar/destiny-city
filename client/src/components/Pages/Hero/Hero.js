@@ -1,10 +1,16 @@
 import React, { useContext } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
-import { CityContext } from "../../../contexts/CityContext";
+import { CityContext } from "../../../context/reducers/cityReducer";
 import { useHistory } from "react-router-dom";
 import { Button } from "../../Button/Button";
 import "./Hero.scss";
+import axios from "axios";
+import {
+  updateCity,
+  updateRatings,
+  updateSalaries,
+} from "../../../context/actions/cityActions";
 
 function Hero({
   options,
@@ -19,8 +25,28 @@ function Hero({
   alt,
   imgStart,
 }) {
-  const { updateCity } = useContext(CityContext);
+  const [{ city }, dispatchToCity] = useContext(CityContext);
+
   const history = useHistory();
+
+  const handleClick = () => {
+    const api_call = async () => {
+      try {
+        const all = await Promise.all([
+          axios.post("api/cities/salaries", {
+            city,
+          }),
+          axios.post("api/cities/ratings", { city }),
+        ]);
+        dispatchToCity(updateSalaries(all[0]));
+        dispatchToCity(updateRatings(all[1]));
+        history.push("/info");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    api_call();
+  };
 
   return (
     <>
@@ -49,7 +75,9 @@ function Hero({
                   {description}
                 </p>
                 <Autocomplete
-                  onChange={(event, value) => updateCity(value)}
+                  onChange={(event, value) =>
+                    dispatchToCity(updateCity(value.City))
+                  }
                   id="combo-box-demo"
                   options={options}
                   getOptionLabel={(option) => option.City}
@@ -58,8 +86,8 @@ function Hero({
                     <TextField {...params} label="City" variant="outlined" />
                   )}
                 />
-                <Button type="submit" onClick={() => history.push("/info")}>
-                  Search
+                <Button type="submit" onClick={handleClick}>
+                  {buttonLabel}
                 </Button>
               </div>
             </div>

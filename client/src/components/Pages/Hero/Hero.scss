@@ -1,5 +1,6 @@
+@import "../../../styles/variables.scss";
 .home__hero {
-  color: #fff;
+  background-color: $default-hero-bg-colour;
   padding: 160px 0;
 }
 
