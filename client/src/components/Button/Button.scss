@@ -1,6 +1,4 @@
-:root {
-  --primary: #fff;
-}
+@import "../../styles/variables.scss";
 
 .btn {
   padding: 8px 20px;
@@ -12,16 +10,16 @@
 }
 
 .btn--primary {
-  background-color: var(--primary);
-  color: #242424;
-  border: 1px solid var(--primary);
+  background-color: $default-button-colour;
+  color: #d89191;
+  border: 1px solid $default-button-colour;
 }
 
 .btn--outline {
   background-color: transparent;
   color: #fff;
   padding: 8px 20px;
-  border: 1px solid var(--primary);
+  border: 1px solid $default-button-outline;
   transition: all 0.3s ease-out;
 }
 
@@ -63,8 +61,8 @@
 
 .btn--wide:hover {
   color: #fff;
-  background-color: #f00946;
-  transition: all 0.2s ease-out;
+  background-color: #3f09f0;
+  transition: all 0.3s ease-out;
 }
 
 .btn-link {
@@ -77,8 +75,14 @@
   width: 100%;
 }
 
+.brown {
+  background-color: #836953;
+  color: black;
+  border: none;
+}
+
 .blue {
-  background-color: #276afb;
+  background-color: #4477b2;
   color: #fff;
   border: none;
 }
@@ -109,4 +113,8 @@
 
 .green:hover {
   background-color: #242424;
+}
+
+.search {
+  margin-top: 1rem;
 }

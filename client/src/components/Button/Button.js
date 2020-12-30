@@ -3,7 +3,7 @@ import "./Button.scss";
 
 const STYLES = ["btn--primary", "btn--outline"];
 const SIZES = ["btn--medium", "btn--large", "btn--mobile", "btn--wide"];
-const COLOR = ["primary", "blue", "red", "green"];
+const COLOR = ["primary", "blue", "red", "green", "brown"];
 
 export const Button = ({
   children,
@@ -12,6 +12,7 @@ export const Button = ({
   buttonStyle,
   buttonSize,
   buttonColor,
+  func,
 }) => {
   const checkButtonStyle = STYLES.includes(buttonStyle)
     ? buttonStyle
@@ -22,7 +23,7 @@ export const Button = ({
 
   return (
     <button
-      className={`btn ${checkButtonStyle} ${checkButtonSize} ${checkButtonColor}`}
+      className={`btn ${func} ${checkButtonStyle} ${checkButtonSize} ${checkButtonColor}`}
       onClick={onClick}
       type={type}
     >
