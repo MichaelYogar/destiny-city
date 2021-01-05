@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -26,6 +26,7 @@ export default function Login(props) {
   const classes = useStyles();
   const [{ isAuth }, dispatchToGlobal] = useContext(GlobalContext);
   const { register, handleSubmit } = useForm();
+  const [redirect, setRedirect] = useState(false);
 
   const onSubmit = async (data) => {
     try {
@@ -36,18 +37,22 @@ export default function Login(props) {
         // use react-toaster to say they need to submit valid info
         // valid token
       } else {
-        dispatchToGlobal(setAuth());
         dispatchToGlobal(setToken(token));
         dispatchToGlobal(setUsername(data.username));
+        dispatchToGlobal(setAuth());
       }
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
+  useEffect(() => {
+    if (isAuth) setRedirect(true);
+  });
+
   return (
     <>
-      {isAuth ? (
+      {redirect ? (
         <Redirect to="/" />
       ) : (
         <Grid container component="main" className={classes.root}>

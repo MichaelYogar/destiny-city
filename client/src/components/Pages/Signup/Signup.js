@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -25,6 +25,7 @@ import {
 // when user signs up, they are automatically signed in
 export default function Signup() {
   const classes = useStyles();
+  const [redirect, setRedirect] = useState(false);
   const [{ isAuth }, dispatchToGlobal] = useContext(GlobalContext);
   const { register, handleSubmit } = useForm();
 
@@ -47,10 +48,13 @@ export default function Signup() {
       console.log(error.response.data);
     }
   };
+  useEffect(() => {
+    if (isAuth) setRedirect(true);
+  });
 
   return (
     <>
-      {isAuth ? (
+      {redirect ? (
         <Redirect to="/" />
       ) : (
         <Grid container component="main" className={classes.root}>
