@@ -6,9 +6,18 @@ const { authorize, validate } = require("../middleware");
 const createJWT = require("../utils/createJWT");
 
 router.post("/register", validate, async (req, res) => {
-  const { email, name, password } = req.body;
-  console.log(email, name, password);
+  const { email, username, password } = req.body;
+
   try {
+    const resultingTable = await db.query(
+      "CREATE TABLE IF NOT EXISTS users( \
+      user_id SERIAL,\
+      user_name VARCHAR(255) NOT NULL,\
+      user_email VARCHAR(255) NOT NULL UNIQUE,\
+      user_password VARCHAR(255) NOT NULL,\
+      PRIMARY KEY(user_id)\
+    )"
+    );
     const user = await db.query("SELECT * FROM users WHERE user_email = $1", [
       email,
     ]);
@@ -23,7 +32,7 @@ router.post("/register", validate, async (req, res) => {
     // returns the values of any columns after the insert or update was run
     let newUser = await db.query(
       "INSERT INTO users (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *",
-      [name, email, bcryptPassword]
+      [username, email, bcryptPassword]
     );
 
     const jwtToken = createJWT(newUser.rows[0].user_id);
@@ -47,6 +56,7 @@ router.post("/login", validate, async (req, res) => {
       return res.status(401).json("Invalid Credential");
     }
 
+    // check password
     const validPassword = await bcrypt.compare(
       password,
       user.rows[0].user_password
