@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -8,7 +8,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { CityContext } from "../../../../context/reducers/cityReducer";
-import { useHistory } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
@@ -20,14 +19,7 @@ const useStyles = makeStyles({
 
 const SalaryTable = () => {
   const classes = useStyles();
-  const [{ city, salaries }, dispatchToCity] = useContext(CityContext);
-  const history = useHistory();
-
-  useEffect(() => {
-    if (Object.keys(salaries).length === 0) {
-      history.push("/");
-    }
-  }, [salaries, history]);
+  const [{ city, salaries }] = useContext(CityContext);
 
   return (
     <Card>

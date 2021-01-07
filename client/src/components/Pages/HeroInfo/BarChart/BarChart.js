@@ -1,9 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import ReactApexChart from "react-apexcharts";
-import { CityContext } from "../../../../contexts/CityContext";
+import { CityContext } from "../../../../context/reducers/cityReducer";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 
 function BarChart() {
-  const { ratings } = useContext(CityContext);
+  const [{ city, ratings }] = useContext(CityContext);
 
   const get_x_values = (values) => {
     if (typeof values.data === "undefined") {
@@ -30,6 +32,9 @@ function BarChart() {
       },
     ],
     options: {
+      title: {
+        text: `Categorical Ratings for ${city}`,
+      },
       chart: {
         type: "bar",
         height: 350,
@@ -44,19 +49,25 @@ function BarChart() {
       },
       xaxis: {
         categories: get_x_values(ratings),
+        title: {
+          text: "Ratings out of 10",
+        },
       },
     },
   };
 
   return (
     <div>
-      {" "}
-      <ReactApexChart
-        options={info.options}
-        series={info.series}
-        type="bar"
-        height={350}
-      />
+      <Card>
+        <CardContent>
+          <ReactApexChart
+            options={info.options}
+            series={info.series}
+            type="bar"
+            height={350}
+          />
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -31,7 +31,7 @@ export default function Signup() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("/auth/register", data);
+      const response = await axios.post("api/auth/register", data);
 
       // token can be null from incorrect input, need to do error checking
       const token = response.data.jwtToken;
@@ -50,7 +50,7 @@ export default function Signup() {
   };
   useEffect(() => {
     if (isAuth) setRedirect(true);
-  });
+  }, [isAuth]);
 
   return (
     <>

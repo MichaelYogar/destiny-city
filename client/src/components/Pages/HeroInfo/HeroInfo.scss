@@ -1,0 +1,13 @@
+.hero-info {
+  background-color: #add8e6;
+}
+
+.hero-info__salary-table {
+  padding: 5%;
+  width: 75%;
+  margin: auto;
+
+  &_header {
+    margin-bottom: 2rem;
+  }
+}

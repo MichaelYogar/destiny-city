@@ -33,10 +33,10 @@ function Hero({
     const api_call = async () => {
       try {
         const all = await Promise.all([
-          axios.post("api/cities/salaries", {
+          axios.post("api/data/cities/salaries", {
             city,
           }),
-          axios.post("api/cities/ratings", { city }),
+          axios.post("api/data/cities/ratings", { city }),
         ]);
         dispatchToCity(updateSalaries(all[0]));
         dispatchToCity(updateRatings(all[1]));

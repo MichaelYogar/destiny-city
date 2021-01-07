@@ -30,7 +30,7 @@ export default function Login(props) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("/auth/login", data);
+      const response = await axios.post("api/auth/login", data);
       const token = response.data.jwtToken;
 
       if (token === undefined || token === null) {
@@ -48,7 +48,7 @@ export default function Login(props) {
 
   useEffect(() => {
     if (isAuth) setRedirect(true);
-  });
+  }, [isAuth]);
 
   return (
     <>
