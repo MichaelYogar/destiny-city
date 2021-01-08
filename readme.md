@@ -50,7 +50,7 @@ PG_DB=example
 PG_PORT=example
 ```
 
-`cd` into the same directory as the docker-compose.yml file and type
+`cd` into the same directory as the docker-compose.yml file and type \
 `docker-compose --env-file ./config/.env.dev up --build`
 
 ### Visit
