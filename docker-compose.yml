@@ -3,7 +3,7 @@ services:
   postgres:
     image: "postgres:latest"
     environment:
-      - POSTGRES_PASSWORD
+      - POSTGRES_PASSWORD=${PG_PASS}
   nginx:
     depends_on:
       - api
@@ -22,11 +22,11 @@ services:
       - /app/node_modules
       - ./server:/app
     environment: # all default values from postgres image from docker hub
-      - PGUSER
-      - PGHOST
-      - PGDATABASE
-      - PGPASSWORD
-      - PGPORT
+      - PGUSER=${PG_USER}
+      - PGHOST=${PG_HOST}
+      - PGDATABASE=${PG_DB}
+      - PGPASSWORD=${PG_PASS}
+      - PGPORT=${PG_PORT}
   client:
     stdin_open: true
     build:
