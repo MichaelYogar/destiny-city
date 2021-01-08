@@ -1,0 +1,35 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t michaelyogar/where-to-work -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true michaelyogar/where-to-work npm run test
+
+after_success:
+  - docker build -t michaelyogar/where-to-work-client ./client
+  - docker build -t michaelyogar/where-to-work-nginx ./nginx
+  - docker build -t michaelyogar/where-to-work-server ./server
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push michaelyogar/where-to-work-client
+  - docker push michaelyogar/where-to-work-nginx
+  - docker push michaelyogar/where-to-work-server
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "where-to-work"
+  env: "WhereToWork-env"
+  bucket_name: "elasticbeanstalk-us-east-1-402582819006"
+  bucket_path: "where-to-work"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  edge: true
