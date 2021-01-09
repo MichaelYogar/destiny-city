@@ -1,45 +1,42 @@
 ## Where To Work
 
-A responsive web application that provides real-time data for Cities around the world to help users decide where to move to.
-
-## Motivation
-
-## Project Status
-
-Project is currently in development. Visit [wheretowork](https://wheretowork.com "Google's Homepage")
-to see currently progress.
+My project, [where-to-work](https://where-to-work.com "where-to-work homepage"), is responsive web application providing real-time data with respect to cities around the world. With this data, users are able to make educated decisions when deciding where to move for work.
 
 ## Features
 
-- Stack: React, Node.js, Express, Postgres
 - Impliments JSON Web Tokens for user authentication/authorization
 - Bar graph - depicting quality of life ratings for specified city
 - Table - provides the 25th, 50th, and 75th percentiles of salaries for tech related jobs.
+- Search bar that lazy loads the cities this website covers. 
+- Languages: Javascript, Node.js, SQL (check if node js is a language).
+- Technologies: Express.js, SCSS, Postgres, React-Bootstrap
 - Uses Redux and Context API
 
-## Screenshots
-
-## Reflection
 
 ## Installation
 
-Clone down this repository. You will need node and npm on your machine.
+Clone down this repository. You will need node, npm, and postgres on your machine.
 
 ### Install
 
-`cd client && npm install`
-`cd server && npm install`
+From project root directory: `cd client && npm install` \
+From project root directory: `cd server && npm install`
+
+### Postgres
+
+In the `/server` folder, you will need to create a `.env` file with valid postgres credientials.
 
 ### Run
 
-`cd client && npm run start`
-`cd server && npm run dev`
+From project root directory: `cd client && npm run start` \
+From project root directory: `cd server && npm run dev`
 
-## Installation with docker
+
+## Installation with docker for development
 
 Clone down this repository. You will need node, npm, and docker on your machine.
 
-- create `/config/.env.dev` in your root directory
+- create `/config/.env.dev` in your project root directory
 - add and replace `example` with valid credientials
 
 ```
@@ -55,4 +52,9 @@ PG_PORT=example
 
 ### Visit
 
-visit `localhost:3000`
+Visit website at `localhost:3000`
+
+## Project Status
+
+Project is currently in development.\
+Visit [where-to-work](https://where-to-work.com "Google's Homepage") to see currently progress.
