@@ -7,11 +7,12 @@ My project, [where-to-work](https://where-to-work.com "where-to-work homepage"),
 - Impliments JSON Web Tokens for user authentication/authorization
 - Bar graph - depicting quality of life ratings for specified city
 - Table - provides the 25th, 50th, and 75th percentiles of salaries for tech related jobs.
-- Search bar that lazy loads the cities this website covers. 
+- Search bar that lazy loads the cities this website covers.
+- Uses Amazon Route 53 to route trafic to Elastic Beanstalk Environment
+- website supports HTTPS and AWS Certificate Manager was used to deploy SSL ceriticate
 - Languages: Javascript, Node.js, SQL (check if node js is a language).
-- Technologies: Express.js, SCSS, Postgres, React-Bootstrap
+- Technologies: Docker, Nginx, Express.js, SCSS, Postgres, React-Bootstrap
 - Uses Redux and Context API
-
 
 ## Installation
 
@@ -30,7 +31,6 @@ In the `/server` folder, you will need to create a `.env` file with valid postgr
 
 From project root directory: `cd client && npm run start` \
 From project root directory: `cd server && npm run dev`
-
 
 ## Installation with docker for development
 
