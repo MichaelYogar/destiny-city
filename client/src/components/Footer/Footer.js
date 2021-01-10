@@ -17,8 +17,9 @@ function Footer() {
             based on a wide variety of information. This ranges from salary
             information, cost of living, and much more! Explore the most up to
             date and relevant information about our world today! WhereToWork is
-            still in development. Website created by: Michael Yogar{" "}
+            still in development. Created by - Michael Yogar.
           </>
+          <p></p>
         </div>
       </div>
       <section className="social-media">
