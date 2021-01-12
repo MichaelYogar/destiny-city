@@ -36,7 +36,7 @@ From project root directory: `cd server && npm run dev`
 
 Clone down this repository. You will need node, npm, and docker on your machine.
 
-- create `/config/.env.dev` in your project root directory
+- create `.env.dev` file in config folder in your project root directory
 - add and replace `example` with valid credientials
 
 ```
