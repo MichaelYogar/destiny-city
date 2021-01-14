@@ -57,4 +57,5 @@ Visit website at `localhost:3000`
 ## Project Status
 
 Project is currently in development.\
-Visit [where-to-work](https://where-to-work.com "Google's Homepage") to see currently progress.
+Visit [where-to-work](https://where-to-work.com "Where To Work") to see currently progress.
+
