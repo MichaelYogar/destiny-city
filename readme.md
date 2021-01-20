@@ -10,8 +10,8 @@ My project, [where-to-work](https://where-to-work.com "where-to-work homepage"),
 - Search bar that lazy loads the cities this website covers.
 - Uses Amazon Route 53 to route trafic to Elastic Beanstalk Environment
 - website supports HTTPS and AWS Certificate Manager was used to deploy SSL ceriticate
-- Languages: Javascript, Node.js, SQL (check if node js is a language).
-- Technologies: Docker, Nginx, Express.js, SCSS, Postgres, React-Bootstrap
+- Languages: Javascript, SQL
+- Technologies: Docker, Nginx, Node.js, Express.js, SCSS, Postgres, React-Bootstrap
 - Uses Redux and Context API
 
 ## Installation
