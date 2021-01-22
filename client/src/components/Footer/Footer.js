@@ -52,7 +52,7 @@ function Footer() {
             </Link>
             <Link
               className="social-icon-link"
-              to="#"
+              to="//michaelyogar.com"
               target="_blank"
               aria-label="personal-website"
             >
