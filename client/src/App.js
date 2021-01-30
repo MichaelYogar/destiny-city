@@ -22,18 +22,16 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          <Switch>
-            <Route path="/sign-up" component={Signup} />
-            <Route path="/login" exact component={Login} />
-            <CityContext.Provider value={[city, dispatchToCity]}>
-              <Route path="/info" component={Info} />
-              <Route path="/" exact component={Home} />
-            </CityContext.Provider>
-          </Switch>
-        </GlobalContext.Provider>
-      </div>
+      <GlobalContext.Provider value={[global, dispatchToGlobal]}>
+        <Switch>
+          <Route path="/sign-up" component={Signup} />
+          <Route path="/login" exact component={Login} />
+          <CityContext.Provider value={[city, dispatchToCity]}>
+            <Route path="/info" component={Info} />
+            <Route path="/" exact component={Home} />
+          </CityContext.Provider>
+        </Switch>
+      </GlobalContext.Provider>
     </Router>
   );
 }
