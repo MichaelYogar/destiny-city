@@ -1,6 +1,10 @@
 sudo: required
 language: generic
 
+branches:
+    except:
+        - development
+
 services:
   - docker
 
