@@ -1,4 +1,4 @@
-## Where To Work
+## Where-To-Work
 
 My project, where-to-work, is responsive web application providing real-time data with respect to cities around the world. With this data, users are able to make educated decisions when deciding where to move for work.
 
@@ -56,6 +56,5 @@ Visit website at `localhost:3000`
 
 ## Project Status
 
-Project is currently in development.\
-Visit [where-to-work](https://where-to-work.com "Where To Work") to see currently progress.
+Project is currently in development.
 
